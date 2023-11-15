@@ -46,5 +46,5 @@ dependencies:
   - pytorch=1.5.1=py3.8_cuda10.1.243_cudnn7.6.3_0
   - torchvision=0.6.1=py38_cu101
   - pip:
-      -opencv-python==4.4.0.46
+    - opencv-python==4.4.0.46
 
