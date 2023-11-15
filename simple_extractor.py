@@ -25,6 +25,24 @@ import networks
 from utils.transforms import transform_logits
 from datasets.simple_extractor_dataset import SimpleFolderDataset
 
+
+#hr-viton labels
+#  labels = {
+#             0:  ['background',  [0, 10]],
+#             1:  ['hair',        [1, 2]],
+#             2:  ['face',        [4, 13]],
+#             3:  ['upper',       [5, 6, 7]],
+#             4:  ['bottom',      [9, 12]],
+#             5:  ['left_arm',    [14]],
+#             6:  ['right_arm',   [15]],
+#             7:  ['left_leg',    [16]],
+#             8:  ['right_leg',   [17]],
+#             9:  ['left_shoe',   [18]],
+#             10: ['right_shoe',  [19]],
+#             11: ['socks',       [8]],
+#             12: ['noise',       [3, 11]]
+#         }
+
 dataset_settings = {
     'lip': {
         'input_size': [473, 473],
@@ -141,8 +159,10 @@ def main():
 
             logits_result = transform_logits(upsample_output.data.cpu().numpy(), c, s, w, h, input_size=input_size)
             parsing_result = np.argmax(logits_result, axis=2)
-            parsing_result_path = os.path.join(args.output_dir, img_name[:-4] + '.png')
+            parsing_result_path = "output.png"
+            parsing_result_path_without_palette = "output_without_palette.png"
             output_img = Image.fromarray(np.asarray(parsing_result, dtype=np.uint8))
+            output_img.save(parsing_result_path_without_palette)
             output_img.putpalette(palette)
             output_img.save(parsing_result_path)
             if args.logits:
